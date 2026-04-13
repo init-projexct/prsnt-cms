@@ -1,0 +1,275 @@
+/* 1. IMPORTS & VARIABLES */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Lato:wght@400;700&family=Open+Sans:wght@700;800&display=swap');
+
+:root {
+    --font-open-sans: 'Open Sans', sans-serif;
+    --font-inter: 'Inter', sans-serif;
+    --font-lato: 'Lato', sans-serif;
+}
+
+/* 2. BASE RESET */
+body {
+    margin: 0;
+    background-color: #ffffff;
+    color: #171717;
+    font-family: var(--font-inter);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 3. NAVIGATION BAR */
+.nav-ft-container {
+    width: 100%;
+    background-color: #ffffff;
+    border-bottom: 1px solid #f8fafc;
+    padding: 1rem 1.5rem;
+    box-sizing: border-box;
+}
+
+.inner-wrap {
+    max-width: 1152px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.nav-inner {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+@media (min-width: 640px) {
+    .nav-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+/* 4. LOGO & BRANDING */
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+}
+
+a.logo-text {
+    font-family: var(--font-open-sans);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.05em;
+    color: #0f172a;
+    text-transform: lowercase;
+    text-decoration: none !important;
+    display: inline-block;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+/* 5. NAV LINKS */
+.nav-links-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1rem;
+    font-family: var(--font-open-sans);
+    font-size: 14px;
+    text-transform: lowercase;
+}
+
+@media (min-width: 640px) { 
+    .nav-links-wrap { margin-top: 0; } 
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #1e293b;
+    transition: color 0.2s;
+}
+
+.nav-link:hover { color: #94a3b8; }
+
+/* 6. CONTENT AREA & GRID */
+.view-container {
+    max-width: 1152px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem;
+}
+
+.grid-two-one {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
+}
+
+@media (min-width: 768px) {
+    .grid-two-one { grid-template-columns: 7fr 2fr; }
+}
+
+/* 7. CARDS & TYPOGRAPHY */
+.view-card {
+    padding: 1.5rem 1.1rem 1.1rem; /* Desktop Padding */
+    border: 1px solid #e2e8f0;
+    border-radius: 1rem;
+    background: white;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.view-title {
+    font-family: var(--font-open-sans);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: #1e293b;
+    margin-bottom: 1px;
+    padding-bottom: 0;
+}
+
+hr.title-sep {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-top: 0;        
+    margin-bottom: 6px;
+    display: block;
+    width: 100%;
+}
+
+.view-content {
+    font-family: var(--font-lato);
+    font-size: 14px;
+    line-height: 1.625;
+    color: #334155;
+    text-align: justify;
+}
+
+/* 8. LINKS INSIDE BODY TEXT */
+.view-content a {
+    color: inherit !important;
+    text-decoration: none !important;
+    /*font-weight: normal !important;  Forces bold to go away */
+    transition: color 0.2s ease;
+}
+
+/* Optional: Slight color change on hover so you know it's clickable */
+.view-content a:hover {
+    color: #64748b !important;
+}
+
+/* 9. SIDEBAR */
+.right-col-links {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f1f5f9;
+    border-radius: 1rem;
+    background: white;
+    overflow: hidden;
+}
+
+.right-col-link-h2 {
+    font-family: var(--font-open-sans);
+    font-size: 11px;
+    font-weight: bold;
+    color: #94a3b8;
+    text-transform: lowercase;
+    padding: 1.5rem 1rem 0.5rem;
+}
+
+.right-col-links a {
+    padding: 1rem;
+    font-family: var(--font-inter);
+    font-size: 14px;
+    text-decoration: none !important;
+    color: #475569 !important;      
+    border-bottom: 1px solid #f8fafc;
+    text-transform: lowercase;
+}
+
+.right-col-links a:hover {
+    background-color: #f8fafc;
+    color: #64748b !important;
+}
+
+/* 10. MOBILE ALIGNMENT FIXES */
+@media (max-width: 767px) {
+    /* Reduce the 'useless space' on the left of the card */
+    .view-card {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    /* Match the sidebar links exactly to the card text above */
+    .right-col-links a {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+
+    /* Match the sidebar header */
+    .right-col-link-h2 {
+        padding-left: 1.25rem;
+    }
+
+    /* Adjust main container to give more screen real estate */
+    .view-container {
+        padding: 1rem;
+    }
+}
+
+/* 11. FOOTER & BREADCRUMBS */
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.breadcrumb {
+    font-size: 10px;
+    color: #666;
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-family: monospace;
+    display: block;
+}
+
+.crumb-line::before { content: "["; margin-right: 0px; }
+.crumb-line::after { content: "]"; margin-left: 0px; }
+
+.breadcrumb a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.breadcrumb .current {
+    color: #999;
+    font-weight: normal;
+}
+
+/* Removes the heavy default indent and aligns bullets with the paragraph text */
+.list-flush {
+    padding-left: 1.25rem; /* Aligns the bullet point with the start of the text */
+    margin-left: 0;
+    list-style-position: outside;
+}
+
+.list-flush li {
+    /*margin-bottom: 0.5rem;  Adds a little breathing room between items */
+}
+
+/* Optional: Specifically for mobile to ensure it doesn't drift */
+@media (max-width: 767px) {
+    .list-flush {
+        padding-left: 1rem; 
+    }
+}
+
+footer a {
+    text-decoration: none !important;
+}
+
+footer .logo-text {
+    font-size: 14px !important;
+}
