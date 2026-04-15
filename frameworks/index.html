@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>frameworks | prsnt-cms</title>
+    
+    <link rel="stylesheet" href="../../global.css">
+    <link rel="stylesheet" href="../../code/element.css">
+    <link rel="stylesheet" href="cntntc.css">
+    
+    <script src="frameworks.js"></script>
+</head>
+<body class="antialiased">
+
+    <div id="navbar-placeholder"></div>
+
+    <main class="view-container">
+        <div class="grid-two-one">
+            
+            <div class="left-col">
+                <section class="view-card">
+                    <h1 class="view-title" id="view-title-text">loading...</h1>
+                    
+                    <div class="view-content">
+                        <div class="frameworks-nav-bar">
+                            <button onclick="Frameworks.prev()" class="nav-arrow-btn" aria-label="Previous">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                            </button>
+                            <button onclick="Frameworks.next()" class="nav-arrow-btn" aria-label="Next">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
+
+                        <div id="sbcnt-content-area" class="sbcnt-content-area">
+                            </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="right-col">
+                <div class="right-col-links-style">
+                    <h2 class="fright-col-link-h2">index</h2>
+                    <div id="link-button-container" class="link-button-container">
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        async function loadStaticComponent(id, file) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            try {
+                const response = await fetch(file);
+                const data = await response.text();
+                element.innerHTML = data;
+            } catch (error) { console.error("Static Component Error:", error); }
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            loadStaticComponent('navbar-placeholder', '../../navbar.html');
+            loadStaticComponent('footer-placeholder', '../../footer.html');
+
+            if (typeof Frameworks !== 'undefined') {
+                Frameworks.init();
+            }
+        });
+    </script>
+</body>
+</html>

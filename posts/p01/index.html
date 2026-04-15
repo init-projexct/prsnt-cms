@@ -2,13 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Security Gate | B02</title>
+    <title>Presentation | P01</title>
     <script>
-        const authType = "B02_KEY";
+        // --- NEW ACCESS CONTROL FLAG ---
+        // ACC_GRANT: Public mode (no password)
+        // ACC_PWD: Protected mode (standard prompt)
+        const accessMode = "ACC_GRANT"; 
+        const authType = "P01_KEY";
 
         async function checkAccess() {
             const hostname = window.location.hostname;
             const isLocal = hostname === 'localhost' || hostname === '127.0.0.1' || hostname.startsWith('192.168.');
+
+            // 0. NEW: Bypass logic for public post folder
+            if (accessMode === "ACC_GRANT") {
+                return grantAccess();
+            }
 
             // 1. If authorized, go straight to content
             if (isLocal || document.cookie.includes("b_access=granted")) {
@@ -16,7 +25,7 @@
             }
 
             // 2. Password Prompt
-            const password = prompt("Please enter password for B02:");
+            const password = prompt("Please enter password for P01:");
             if (!password) { window.location.href = "/"; return; }
 
             try {
@@ -43,10 +52,10 @@
     const hostname = window.location.hostname;
     const path = window.location.pathname;
 
- 	// 2. Identify the folder dynamically
+	// 2. Identify the folder dynamically
     // This grabs the name of the folder containing this index.html
     const pathSegments = path.split('/').filter(Boolean);
-    const folder = pathSegments[pathSegments.length - 1] || 'b02';
+    const folder = pathSegments[pathSegments.length - 1] || 'p01';
 
     // 3. Determine if we are at the "Gate" (index) or trying to see a deep file
     const isAtGate = path.endsWith('/') || path.includes('index') || path.endsWith(folder);
@@ -57,9 +66,10 @@
             console.log("Localhost redirecting...");
             window.location.replace("page-00-00-title.html");
         } else {
-            // VERCEL MODE: Force the absolute path to keep the folder in the URL
-            console.log("Vercel redirecting to absolute path...");
-            window.location.replace(`/pg/${folder}/page-00-00-title.html`);
+            // VERCEL MODE: Detect if we are in /pg/ or /post/ to keep absolute pathing correct
+            const baseDir = path.includes('/post/') ? 'post' : 'pg';
+            console.log("Remote redirecting to absolute path...");
+            window.location.replace(`/${baseDir}/${folder}/page-00-00-title.html`);
         }
     } else {
         // If they were trying to access a specific file (e.g., .txt), just reload
