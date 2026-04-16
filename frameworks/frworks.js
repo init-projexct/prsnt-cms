@@ -1,5 +1,5 @@
-/* --- FRAMEWORKS CONTROLLER --- */
-const Frameworks = {
+/* --- FRWORK CONTROLLER --- */
+const Frmwrk = {
     manifest: [
         { file: "cntnt01.01.html", label: "intro", title: "frameworks overview" },
         { file: "cntnt01.02.html", label: "installation", title: "setting up prsnt" },
@@ -9,11 +9,8 @@ const Frameworks = {
     currentIndex: 0,
 
     async init() {
-        // Ensure the containers exist before running
-        if (!document.getElementById('link-button-container')) {
-            console.error("Frameworks Error: 'link-button-container' not found in HTML.");
-            return;
-        }
+        const container = document.getElementById('link-button-container');
+        if (!container) return;
         this.renderSidebar();
         await this.load(0);
     },
@@ -21,7 +18,7 @@ const Frameworks = {
     renderSidebar() {
         const container = document.getElementById('link-button-container');
         container.innerHTML = this.manifest.map((item, index) => `
-            <button onclick="Frameworks.load(${index})" 
+            <button onclick="window.Frmwrk.load(${index})" 
                     class="link-item-btn ${index === this.currentIndex ? 'active' : 'inactive'}"
                     id="btn-${index}">
                 ${item.label}
@@ -35,22 +32,14 @@ const Frameworks = {
         const headerArea = document.getElementById('view-title-text');
 
         try {
-            console.log(`Attempting to load: ${item.file}`); // Debug log
-            const response = await fetch(item.file);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            }
-
+            // Using a cache-busting timestamp for localhost reliability
+            const response = await fetch(`./${item.file}?t=${Date.now()}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const html = await response.text();
-            
-            // 1. Update Content
+
             contentArea.innerHTML = html;
-            
-            // 2. Update Header
             headerArea.innerText = item.title;
 
-            // 3. Update UI State (Safer class handling)
             document.querySelectorAll('.link-item-btn').forEach(b => {
                 b.classList.remove('active');
                 b.classList.add('inactive');
@@ -64,23 +53,14 @@ const Frameworks = {
             
             this.currentIndex = index;
         } catch (e) {
-            console.error("Frameworks Load Error:", e);
-            contentArea.innerHTML = `
-                <div style="padding: 20px; border: 1px dashed #f87171; color: #ef4444;">
-                    <strong>Error loading content</strong><br>
-                    File: ${item.file}<br>
-                    Reason: ${e.message}
-                </div>`;
+            console.error("Frmwrk Load Error:", e);
+            contentArea.innerHTML = `<div style="color:red">Error loading ${item.file}</div>`;
         }
     },
 
-    next() {
-        let n = (this.currentIndex + 1) % this.manifest.length;
-        this.load(n);
-    },
-
-    prev() {
-        let n = (this.currentIndex - 1 + this.manifest.length) % this.manifest.length;
-        this.load(n);
-    }
+    next() { this.load((this.currentIndex + 1) % this.manifest.length); },
+    prev() { this.load((this.currentIndex - 1 + this.manifest.length) % this.manifest.length); }
 };
+
+// Explicitly export to global window object
+window.Frmwrk = Frmwrk;
